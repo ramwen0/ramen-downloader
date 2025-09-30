@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Ramen Downloader
+Comment=Download YouTube playlists as MP3
+Exec=ramen-downloader
+Icon=ramen-downloader
+Categories=AudioVideo;Audio;Network;
+Terminal=false
+StartupWMClass=ramen-downloader
