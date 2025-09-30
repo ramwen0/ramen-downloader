@@ -1,0 +1,17 @@
+pkgbase = ramen_downloader
+	pkgdesc = A simple YouTube playlist downloader
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/ramwen0/ramen-downloader
+	arch = any
+	license = MIT-0
+	depends = python
+	depends = python-customtkinter
+	depends = yt-dlp
+	depends = python-pillow
+	depends = ffmpeg
+	depends = tk
+	source = https://github.com/ramwen0/ramen-downloader
+	sha256sums = cdacfc09b88e87b1ecdf79553f9d4a915301a3efeb9bfc219a2765d79dc396ec
+
+pkgname = ramen_downloader
