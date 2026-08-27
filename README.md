@@ -7,9 +7,3 @@ A simple GUI application to download YouTube playlists as MP3 files, with automa
 - Python 3.8+
 - FFmpeg
 - tkinter
-
-## Installation
-
-### From AUR (if published)
-```bash
-yay -S ramen-downloader
