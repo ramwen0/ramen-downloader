@@ -9,7 +9,7 @@ setup(
     package_dir={"": "src"},
     install_requires=[
         "customtkinter>=5.2.0",
-        "yt-dlp>=2023.11.16",
+        "yt-dlp>=2026.3.17",
         "pillow>=10.0.0",  # Required by customtkinter
     ],
     entry_points={
