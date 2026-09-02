@@ -51,10 +51,12 @@ class Downloader:
                 playlist_info = ydl.extract_info(playlist_url, download=False)
                 playlist_title = playlist_info.get('title', 'Unknown Playlist')
                 playlist_author = playlist_info.get('uploader') or playlist_info.get('channel', 'Unknown Artist')
-                track_list = playlist_info.get('entries', [])
 
-                # Filter out None entries (deleted/unavailable videos)
-                track_list = [track for track in track_list if track is not None]
+                if 'entries' in playlist_info:
+                    track_list = [t for t in playlist_info.get('entries', []) if t is not None]
+                else:
+                    track_list = [playlist_info]
+
 
             except Exception as e:
                 print(f"Error extracting playlist info: {e}")
