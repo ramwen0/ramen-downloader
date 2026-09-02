@@ -10,7 +10,7 @@ setup(
     install_requires=[
         "customtkinter>=5.2.0",
         "yt-dlp>=2026.3.17",
-        "pillow>=10.0.0",  # Required by customtkinter
+        "pillow>=10.0.0",
     ],
     entry_points={
         "console_scripts": [

@@ -2,6 +2,7 @@ import customtkinter
 import threading
 from tkinter import filedialog
 from .downloader_brains import Downloader
+import os
 
 class DownloaderApp:
     def __init__(self):
@@ -11,8 +12,9 @@ class DownloaderApp:
         
     def setup_ui(self):
         # App Theme
+        THEME_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "themes", "purple.json")
         customtkinter.set_appearance_mode("system")
-        customtkinter.set_default_color_theme(f"../themes/purple.json")  # built in themes are: blue, dark-blue, green
+        customtkinter.set_default_color_theme(THEME_PATH)
 
         self.root = customtkinter.CTk()
         self.root.geometry('600x550')

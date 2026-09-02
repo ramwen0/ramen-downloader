@@ -1,5 +1,8 @@
 from ramen_downloader.downloader_ui import DownloaderApp
 
-if __name__ == "__main__":
+def main():
     app = DownloaderApp()
     app.run()
+
+if __name__ == "__main__":
+    main()
