@@ -19,7 +19,7 @@ class Job:
         self._version = 0
         self._status = "queued"
         self._error: Optional[str] = None
-        self._playlist_title = Optional[str] = None
+        self._playlist_title: Optional[str] = None
         self._total = 0
         self._current_index = 0
         self._current_title: Optional[str] = None
@@ -104,43 +104,43 @@ class Job:
                     self._overall_percent = 100.0
             self._version += 1
         
-    class JobManager:
-        def __init__(self, music_dir:str, downloader_factory:Callable[[], object] = Downloader, max_concurrent:int = 1):
-            self.music_dir = music_dir
-            self._factory = downloader_factory
-            self._slots = threading.Semaphore(max_concurrent)
-            self.jobs = Dict[str, Job] = {}
-            self._lock = threading.Lock()
+class JobManager:
+    def __init__(self, music_dir:str, downloader_factory:Callable[[], object] = Downloader, max_concurrent:int = 1):
+        self.music_dir = music_dir
+        self._factory = downloader_factory
+        self._slots = threading.Semaphore(max_concurrent)
+        self._jobs:Dict[str, Job] = {}
+        self._lock = threading.Lock()
 
-        def create(self, url:str) -> Job:
-            job = Job(url, self._factory())
-            with self._lock:
-                self._jobs[job.id] = job
-            threading.Thread(target=self._run, args=(job,), daemon=True).start()
-            return job
+    def create(self, url:str) -> Job:
+        job = Job(url, self._factory())
+        with self._lock:
+            self._jobs[job.id] = job
+        threading.Thread(target=self._run, args=(job,), daemon=True).start()
+        return job
 
-        def get(self, job_id: str) ->   Optional[Job]:
-            with self._lock:
-                return self._jobs.get(job_id)
+    def get(self, job_id: str) ->   Optional[Job]:
+        with self._lock:
+            return self._jobs.get(job_id)
 
-        def list(self) -> List[Job]:
-            with self._lock:
-                return sorted(self._jobs.values(), key=lambda j: j.created_at, reverse=True)
+    def list(self) -> List[Job]:
+        with self._lock:
+            return sorted(self._jobs.values(), key=lambda j: j.created_at, reverse=True)
 
-        def cancel(self, job_id:str) -> Optional[Job]:
-            job = self.get(job_id)
-            if job is None:
-                return None
-            job.cancel_if_queued()
-            job.downloader.cancel()
-            return job
+    def cancel(self, job_id:str) -> Optional[Job]:
+        job = self.get(job_id)
+        if job is None:
+            return None
+        job.cancel_if_queued()
+        job.downloader.cancel()
+        return job
 
-        def _run(self, job:Job) -> None:
-            with self._slots:
-                if not job.try_start():
-                    return
-                try:
-                    job.downloader.download_playlist(job.url, self.music_dir, on_event=job.apply)
-                except Exception as exc:
-                    job.apply(Fatal(f"Unexpected error: {exc}"))
+    def _run(self, job:Job) -> None:
+        with self._slots:
+            if not job.try_start():
+                return
+            try:
+                job.downloader.download_playlist(job.url, self.music_dir, on_event=job.apply)
+            except Exception as exc:
+                job.apply(Fatal(f"Unexpected error: {exc}"))
                 
