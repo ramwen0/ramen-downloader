@@ -47,7 +47,7 @@ class TrackFailed:
 
 @dataclass
 class Finished:
-    completed: bool
+    cancelled: bool
     succeeded: int
     failed: int
 
@@ -159,8 +159,7 @@ class Downloader:
             ydl.download([track_url])
 
     def download_playlist(self, url: str, out_dir: str = ".", on_event: Optional[EventCallback] = None) -> None:
-        emit = EventCallback = on_event or (lambda e: None)
-        self._cancel.clear()
+        emit:EventCallback = on_event or (lambda e: None)
 
         try:
             playlist_title, playlist_author, tracks = self._fetch_playlist(url)

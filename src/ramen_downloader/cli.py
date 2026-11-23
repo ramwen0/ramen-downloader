@@ -22,7 +22,7 @@ def show(event: Event) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Download a playlist from YouTube.")
     parser.add_argument("url", help="The URL of the playlist to download.")
-    parser.add_argument("--o", "-out", default="downloads", help="The output directory for downloaded files.")
+    parser.add_argument("-o", "--out", default="downloads", help="The output directory for downloaded files.")
     args = parser.parse_args()
 
     downloader = Downloader()
